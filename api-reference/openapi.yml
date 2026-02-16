@@ -1,0 +1,156 @@
+-----
+
+### 3\. File OpenAPI: `api-reference/openapi.yml`
+
+Ini adalah inti dari dokumentasi Anda. Sudah lengkap dengan detail **Unified Send** (oneOf), **Groups**, **Polls**, **Location**, dan **Instance Control**.
+
+```yaml
+openapi: 3.0.0
+info:
+  title: Wachat API Reference
+  version: 2.4.0
+  description: Full documentation for Wachat WhatsApp Gateway.
+servers:
+  - url: https://api.wachat.net/api/v1
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: apikey
+
+security:
+  - ApiKeyAuth: []
+
+paths:
+  /send:
+    post:
+      summary: Send Unified Message
+      tags: [Messaging]
+      description: Single endpoint for all message types.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [instanceName, number, type]
+              properties:
+                instanceName: { type: string, example: "default_instance" }
+                number: { type: string, example: "62812345678" }
+                type: { type: string, enum: [text, image, video, document, audio] }
+              oneOf:
+                - title: Text Message
+                  properties:
+                    type: { const: text }
+                    message: { type: string, example: "Hello World!" }
+                - title: Image Message
+                  properties:
+                    type: { const: image }
+                    mediaUrl: { type: string, example: "https://example.com/img.jpg" }
+                    message: { type: string, description: "Caption" }
+                - title: Video Message
+                  properties:
+                    type: { const: video }
+                    mediaUrl: { type: string, example: "https://example.com/vid.mp4" }
+                    message: { type: string }
+                - title: Audio Message
+                  properties:
+                    type: { const: audio }
+                    mediaUrl: { type: string, example: "https://example.com/sound.mp3" }
+                - title: Document Message
+                  properties:
+                    type: { const: document }
+                    mediaUrl: { type: string, example: "https://example.com/file.pdf" }
+                    fileName: { type: string, example: "Invoice.pdf" }
+                    mimetype: { type: string, example: "application/pdf" }
+
+  /send-group:
+    post:
+      summary: Send Group Message
+      tags: [Messaging]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [instanceName, groupJid, message]
+              properties:
+                instanceName: { type: string }
+                groupJid: { type: string, example: "1234567890@g.us" }
+                message: { type: string }
+
+  /send-location:
+    post:
+      summary: Send Location
+      tags: [Messaging]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [instanceName, number, latitude, longitude]
+              properties:
+                instanceName: { type: string }
+                number: { type: string }
+                latitude: { type: number, minimum: -90, maximum: 90 }
+                longitude: { type: number, minimum: -180, maximum: 180 }
+                name: { type: string }
+                address: { type: string }
+
+  /send-poll:
+    post:
+      summary: Send Poll
+      tags: [Messaging]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [instanceName, number, pollName, options]
+              properties:
+                instanceName: { type: string }
+                number: { type: string }
+                pollName: { type: string, example: "Favorite Color?" }
+                options: { type: array, items: { type: string }, example: ["Red", "Blue"] }
+
+  /groups:
+    get:
+      summary: Fetch Groups
+      tags: [Instance Management]
+      parameters:
+        - name: instanceName
+          in: query
+          required: true
+          schema: { type: string }
+
+  /instance/state:
+    get:
+      summary: Connection State
+      tags: [Instance Management]
+      parameters:
+        - name: instanceName
+          in: query
+          required: true
+          schema: { type: string }
+
+  /instance/qr:
+    get:
+      summary: Get Pairing QR
+      tags: [Instance Management]
+      parameters:
+        - name: instanceName
+          in: query
+          required: true
+          schema: { type: string }
+
+  /instance/logout:
+    delete:
+      summary: Logout Instance
+      tags: [Instance Management]
+      parameters:
+        - name: instanceName
+          in: query
+          required: true
+          schema: { type: string }
