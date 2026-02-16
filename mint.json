@@ -2,8 +2,8 @@
   "$schema": "https://mintlify.com/schema.json",
   "name": "Wachat API",
   "logo": {
-    "light": "/logo/light.png",
-    "dark": "/logo/dark.png"
+    "light": "",
+    "dark": ""
   },
   "favicon": "/favicon.png",
   "colors": {
