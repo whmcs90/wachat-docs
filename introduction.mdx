@@ -1,0 +1,35 @@
+---
+title: "Introduction"
+description: "Build powerful WhatsApp automations with Wachat's Developer-First API."
+---
+
+## Overview
+
+Wachat is a high-performance WhatsApp Gateway designed for stability and scale. Our API allows you to integrate WhatsApp messaging into any application, whether it's for customer support, marketing notifications, or interactive utilities.
+
+### Why Developers Choose Wachat?
+
+<CardGroup cols={2}>
+  <Card title="Unified API" icon="bolt" href="/api-reference/send">
+    One endpoint to rule them all: Text, Image, Video, Audio, and Documents.
+  </Card>
+  <Card title="Real-time Webhooks" icon="webhook" href="#webhooks">
+    Get notified instantly when a message arrives or a status changes.
+  </Card>
+  <Card title="Scalable Instances" icon="server" href="/api-reference/instance/state">
+    Manage multiple WhatsApp accounts through isolated instances.
+  </Card>
+  <Card title="Secure & Reliable" icon="shield-check">
+    Enterprise-grade security with 99.9% delivery uptime.
+  </Card>
+</CardGroup>
+
+## Authentication
+
+Every request to the Wachat API must be authenticated using an **API Key**. 
+You can generate your key in the **Team Settings** section of your [Dashboard](https://app.wachat.net).
+
+Include the key in your request header as shown below:
+
+```bash
+apikey: "YOUR_API_KEY"
