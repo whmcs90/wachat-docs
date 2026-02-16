@@ -1,22 +1,5 @@
 {
-  "$schema": "https://mintlify.com/schema.json",
   "name": "Wachat API",
-  "logo": {
-    "light": "",
-    "dark": ""
-  },
-  "favicon": "/favicon.png",
-  "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373"
-  },
-  "topbarLinks": [
-    {
-      "name": "Support",
-      "url": "https://www.wachat.net/"
-    }
-  ],
   "navigation": [
     {
       "group": "Getting Started",
@@ -25,29 +8,13 @@
       ]
     },
     {
-      "group": "Messaging",
+      "group": "API Reference",
       "pages": [
         {
-          "group": "Send Messages",
-          "openapi": "api-reference/openapi.yml"
-        }
-      ]
-    },
-    {
-      "group": "Instance Management",
-      "pages": [
-        {
-          "group": "Control & Status",
+          "group": "Messaging",
           "openapi": "api-reference/openapi.yml"
         }
       ]
     }
-  ],
-  "api": {
-    "baseUrl": "https://app.wachat.net/api/v1",
-    "auth": {
-      "method": "key",
-      "name": "apikey"
-    }
-  }
+  ]
 }
